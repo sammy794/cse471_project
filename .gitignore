@@ -1,0 +1,28 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+.venv-1/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Node
+node_modules/
+dist/
+dist-ssr/
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+uploads/
+
+# Editor files
+.vscode/
+.idea/
+.DS_Store
