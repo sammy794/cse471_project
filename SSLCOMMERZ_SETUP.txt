@@ -1,0 +1,49 @@
+DisasterNet - SSLCOMMERZ Sandbox Setup
+======================================
+
+The project code is already integrated with SSLCOMMERZ Hosted Checkout.
+You only need to provide YOUR private Sandbox credentials and a public callback URL.
+
+1) IMPORTANT: Regenerate the Sandbox Store Password if it was exposed in a screenshot.
+
+2) Open:
+   backend\.env
+
+   Fill in:
+   SSLCOMMERZ_STORE_ID=YOUR_SANDBOX_STORE_ID
+   SSLCOMMERZ_STORE_PASSWORD=YOUR_NEW_SANDBOX_STORE_PASSWORD
+   SSLCOMMERZ_SANDBOX=true
+   SSLCOMMERZ_BASE_URL=https://sandbox.sslcommerz.com
+   SSLCOMMERZ_FRONTEND_URL=http://127.0.0.1:5173
+
+3) Install/update backend dependencies once:
+   SETUP_WINDOWS.bat
+
+4) Start FastAPI on port 8000, then expose it through a public HTTPS tunnel.
+   Example with ngrok:
+   ngrok http 8000
+
+   If ngrok gives:
+   https://example.ngrok-free.app
+
+   set in backend\.env:
+   SSLCOMMERZ_CALLBACK_BASE_URL=https://example.ngrok-free.app
+
+5) In SSLCOMMERZ Sandbox -> Store Settings -> IPN URL, use:
+   https://example.ngrok-free.app/api/sslcommerz/ipn
+
+6) Restart the backend after changing .env.
+
+7) Run DisasterNet and login as a Donor.
+   Select a campaign -> Donate Securely -> enter at least BDT 10 ->
+   Proceed to Secure Payment.
+
+Payment flow:
+React Donor UI -> FastAPI -> SSLCOMMERZ Sandbox -> hosted checkout ->
+success/fail/cancel callback + IPN -> FastAPI validation -> donation Completed ->
+tracking ID / QR / campaign amount / transparency continue working.
+
+Security:
+- Never put SSLCOMMERZ_STORE_PASSWORD in React/frontend code.
+- Never commit backend/.env to GitHub.
+- Sandbox uses test transactions; it does not move real money.
