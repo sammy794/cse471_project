@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { BarChart2, HandCoins, PackageCheck, ShieldCheck, Users } from 'lucide-react';
 
-const API_BASE = '/api';
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL || '/api';
 
 export const PublicTransparency = ({ onBack }) => {
   const [data, setData] = useState({ summary: {}, campaigns: [], completed_distributions: [] });
